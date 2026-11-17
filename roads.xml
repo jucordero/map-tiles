@@ -1,0 +1,49 @@
+<Map srs="+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs">
+
+  <Style name="roads">
+    <Rule>
+      <Filter>[highway] = 'motorway'</Filter>
+      <LineSymbolizer stroke="#000000" stroke-width="3" />
+    </Rule>
+
+    <Rule>
+      <Filter>[highway] = 'primary'</Filter>
+      <LineSymbolizer stroke="#000000" stroke-width="2.5" />
+    </Rule>
+
+    <Rule>
+      <Filter>[highway] = 'secondary'</Filter>
+      <LineSymbolizer stroke="#000000" stroke-width="2" />
+    </Rule>
+
+    <Rule>
+      <Filter>[highway] = 'tertiary'</Filter>
+      <LineSymbolizer stroke="#000000" stroke-width="1.5" />
+    </Rule>
+
+    <Rule>
+      <Filter>[highway] = 'residential'</Filter>
+      <LineSymbolizer stroke="#000000" stroke-width="1" />
+    </Rule>
+
+    <Rule>
+      <Filter>[highway] = 'cycleway'</Filter>
+      <LineSymbolizer stroke="#000000" stroke-width="1" stroke-dasharray="4,2"/>
+    </Rule>
+  </Style>
+
+  <Layer name="roads" srs="+proj=merc +datum=WGS84 +units=m +no_defs">
+    <StyleName>roads</StyleName>
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">osm_london</Parameter>
+      <Parameter name="table">
+        (SELECT way, highway FROM planet_osm_line
+         WHERE highway IS NOT NULL) AS roads
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      <Parameter name="srid">3857</Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>
